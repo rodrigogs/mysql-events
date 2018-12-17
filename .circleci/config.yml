@@ -1,8 +1,8 @@
 version: 2
-jobs:
-  build:
+
+commands:
+  test:
     docker:
-      - image: circleci/node:8.11.3
       - image: circleci/mysql:5.5
         environment:
           MYSQL_ROOT_PASSWORD: 'root'
@@ -41,5 +41,31 @@ jobs:
           name: Run tests/coverage
           command: |
             npm run coverage
-            ./cc-test-reporter format-coverage -t lcov -o coverage.json coverage/lcov.info
-            ./cc-test-reporter upload-coverage -i coverage.json
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ./cc-test-reporter format-coverage -t lcov -o coverage.json coverage/lcov.info
+              ./cc-test-reporter upload-coverage -i coverage.json
+            fi
+
+jobs:
+  node-8:
+    docker:
+      - image: circleci/node:8.11.3
+    steps:
+      - test
+  node-10:
+    docker:
+      - image: circleci/node:10.14.2
+    steps:
+      - test
+  node-11:
+    docker:
+      - image: circleci/node:11.4.0
+    steps:
+      - test
+
+workflows:
+  node-multi-build:
+    jobs:
+      - node-8
+      - node-10
+      - node-11
