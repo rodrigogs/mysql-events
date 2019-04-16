@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.11.3
+      - image: circleci/node:10
       - image: circleci/mysql:5.5
         environment:
           MYSQL_ROOT_PASSWORD: 'root'
@@ -23,7 +23,6 @@ jobs:
           command: |
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
-
       - run:
           name: Install dependencies
           command: npm install
