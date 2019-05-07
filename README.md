@@ -62,6 +62,7 @@ program()
       host: 'localhost',
       user: 'username',
       password: 'password',
+      isPool: true // create a pool instead of a single connection
     };
 
     const myInstance = new MySQLEvents(dsn, { /* ZongJi options */ });
@@ -73,6 +74,18 @@ program()
       host: 'localhost',
       user: 'username',
       password: 'password',
+    });
+
+    const myInstance = new MySQLEvents(connection, { /* ZongJi options */ });
+    ```
+    OR 
+    
+    ```javascript
+    const connection = mysql.createPool({
+      host: 'localhost',
+      user: 'username',
+      password: 'password',
+      connectionLimit: 10,
     });
 
     const myInstance = new MySQLEvents(connection, { /* ZongJi options */ });
