@@ -16,6 +16,7 @@
     "url": "git@github.com:rodrigogs/mysql-events.git"
   },
   "main": "index.js",
+  "types" : "lib/index.d.ts",
   "scripts": {
     "eslint": "eslint . --ext .js",
     "test": "npm run test:55 && npm run test:56 && npm run test:57 && npm run test:80",
